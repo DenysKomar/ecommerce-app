@@ -1,0 +1,14 @@
+body {
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+header {
+  background-color: #404040;
+  padding: 16px;
+}
+header a {
+  color: #ffffff;
+  font-weight: bold;
+  text-decoration: none;
+}
