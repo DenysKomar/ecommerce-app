@@ -1,6 +1,8 @@
 import axios from "axios";
 import React, { useEffect, useReducer, useState } from "react";
+import { Col, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import Product from "../components/Product";
 import { IProductData } from "../data";
 
 const reducer = (state: any, action: any) => {
@@ -48,21 +50,19 @@ const HomePage = () => {
     <div>
       <h1>Featured Products</h1>
       <div className="products">
-        {products.map((product: IProductData) => (
-          <div className="product" key={product.slug}>
-            <Link to={`/product/${product.slug}`}>
-              <img src={product.image} alt={product.name} />
-            </Link>
-            <div className="product-info">
-              <Link to={`/product/${product.slug}`}>
-                <p>{product.name}</p>
-              </Link>
-              <p>${product.price}</p>
-
-              <button>Add to cart</button>
-            </div>
-          </div>
-        ))}
+        {loading ? (
+          <div className="loading">Loading...</div>
+        ) : error ? (
+          <div>Error</div>
+        ) : (
+          <Row>
+            {products.map((product: IProductData) => (
+              <Col key={product.slug} sm={6} md={4} lg={3} className="mb-3">
+                <Product product={product} />
+              </Col>
+            ))}
+          </Row>
+        )}
       </div>
     </div>
   );
