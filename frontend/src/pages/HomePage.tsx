@@ -3,7 +3,7 @@ import React, { useEffect, useReducer, useState } from "react";
 import { Col, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Product from "../components/Product";
-import { IProductData } from "../data";
+import { IProductData } from "../interfaces/data";
 
 const reducer = (state: any, action: any) => {
   switch (action.type) {

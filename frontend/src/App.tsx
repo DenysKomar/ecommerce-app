@@ -1,5 +1,5 @@
 import { Route, Router, Routes } from "react-router-dom";
-import data, { IProductData } from "./data";
+import data, { IProductData } from "./interfaces/data";
 import HomePage from "./pages/HomePage";
 import ProductPage from "./pages/ProductPage";
 import { Link } from "react-router-dom";
