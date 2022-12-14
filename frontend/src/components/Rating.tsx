@@ -5,7 +5,7 @@ import { BsStar } from "@react-icons/all-files/bs/BsStar";
 interface IRating {
   rating: number;
   numReviews: number;
-  className: ReactNode;
+  className?: ReactNode;
 }
 
 const Rating = ({ numReviews, rating, className }: IRating): JSX.Element => {

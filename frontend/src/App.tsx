@@ -1,5 +1,5 @@
 import { Route, Router, Routes } from "react-router-dom";
-import data, { IProductData } from "./interfaces/data";
+import { IProductData } from "./interfaces/data";
 import HomePage from "./pages/HomePage";
 import ProductPage from "./pages/ProductPage";
 import { Link } from "react-router-dom";
@@ -19,7 +19,7 @@ function App() {
         </Navbar>
       </header>
       <main>
-        <Container>
+        <Container className="mt-3">
           <Routes>
             <Route path="/product/:slug" element={<ProductPage />} />
             <Route path="/" element={<HomePage />} />

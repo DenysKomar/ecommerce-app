@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useReducer, useState } from "react";
 import { Col, Row } from "react-bootstrap";
+import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
 import Product from "../components/Product";
 import { IProductData } from "../interfaces/data";
@@ -48,6 +49,9 @@ const HomePage = () => {
 
   return (
     <div>
+      <Helmet>
+        <title>Home Page</title>
+      </Helmet>
       <h1>Featured Products</h1>
       <div className="products">
         {loading ? (
