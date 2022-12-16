@@ -2,43 +2,35 @@ import axios from "axios";
 import React, { useEffect, useReducer } from "react";
 import { Badge, Button, Card, Col, ListGroup, Row } from "react-bootstrap";
 import { Helmet } from "react-helmet-async";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import ErrorBox from "../components/ErrorBox";
+import Loading from "../components/Loading";
 import Rating from "../components/Rating";
+import { addToCart } from "../store/cartSlice/cartSlice";
+import { fetchError, fetchSuccess } from "../store/productSlice/productSlice";
+import { RootState } from "../store/store";
 
-const reducer = (state: any, action: any) => {
-  switch (action.type) {
-    case "FETCH_REQUEST":
-      return { ...state, loading: true };
-    case "FETCH_SUCCESS":
-      return { ...state, product: action.payload, loading: false };
-    case "FETCH_FAILURE":
-      return { ...state, error: action.payload, loading: false };
-    default:
-      return state;
-  }
-};
 const ProductPage = () => {
   const params = useParams();
   const { slug } = params;
-  const [{ loading, error, product }, dispatch] = useReducer(reducer, {
-    loading: true,
-    product: [],
-    error: "",
-  });
+  const { loading, product, error } = useSelector(
+    (state: RootState) => state.product
+  );
+  const dispatch = useDispatch();
   useEffect(() => {
     const fetchData = async () => {
-      dispatch({ type: "FETCH_REQUEST" });
       try {
         const httpLink = "http://localhost:5000";
         await axios
           .get(httpLink + `/api/products/slug/${slug}`)
           .then((response) => {
-            dispatch({ type: "FETCH_SUCCESS", payload: response.data });
-            console.log(response.data);
+            dispatch(fetchSuccess(response.data));
+            console.log(response);
           });
       } catch (error) {
         if (error instanceof Error) {
-          dispatch({ type: "FETCH_FAILURE", payload: error.message });
+          dispatch(fetchError(error.message));
           console.log(error);
         }
       }
@@ -47,9 +39,9 @@ const ProductPage = () => {
   }, [slug]);
 
   return loading ? (
-    <div>Loading...</div>
+    <Loading />
   ) : error ? (
-    <div>Error</div>
+    <ErrorBox variant="danger">{error}</ErrorBox>
   ) : (
     <div>
       <Row>
@@ -104,7 +96,13 @@ const ProductPage = () => {
                 {product.countInStock > 0 && (
                   <ListGroup.Item>
                     <div className="d-grid">
-                      <Button variant="primary"> Add to Curt</Button>
+                      <Button
+                        variant="primary"
+                        onClick={() => dispatch(addToCart(product))}
+                      >
+                        {" "}
+                        Add to Curt
+                      </Button>
                     </div>
                   </ListGroup.Item>
                 )}

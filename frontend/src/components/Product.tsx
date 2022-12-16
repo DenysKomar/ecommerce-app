@@ -1,7 +1,9 @@
 import React from "react";
 import { Button, Card } from "react-bootstrap";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { IProductData } from "../interfaces/data";
+import { addToCart } from "../store/cartSlice/cartSlice";
 import Rating from "./Rating";
 
 interface IProduct {
@@ -9,6 +11,7 @@ interface IProduct {
 }
 
 const Product = ({ product }: IProduct) => {
+  const dispatch = useDispatch();
   return (
     <Card className="product">
       <Link to={`/product/${product.slug}`}>
@@ -24,7 +27,9 @@ const Product = ({ product }: IProduct) => {
           numReviews={product.numReviews}
         />
         <Card.Text>${product.price}</Card.Text>
-        <Button>Add to cart</Button>
+        <Button onClick={() => dispatch(addToCart(product))}>
+          Add to cart
+        </Button>
       </Card.Body>
     </Card>
   );

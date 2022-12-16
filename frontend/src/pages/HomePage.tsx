@@ -3,6 +3,8 @@ import React, { useEffect, useReducer, useState } from "react";
 import { Col, Row } from "react-bootstrap";
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
+import ErrorBox from "../components/ErrorBox";
+import Loading from "../components/Loading";
 import Product from "../components/Product";
 import { IProductData } from "../interfaces/data";
 
@@ -55,9 +57,9 @@ const HomePage = () => {
       <h1>Featured Products</h1>
       <div className="products">
         {loading ? (
-          <div className="loading">Loading...</div>
+          <Loading />
         ) : error ? (
-          <div>Error</div>
+          <ErrorBox variant="danger">{error}</ErrorBox>
         ) : (
           <Row>
             {products.map((product: IProductData) => (
