@@ -2,7 +2,7 @@ import React from "react";
 import { Button, Card, Col, ListGroup, Row } from "react-bootstrap";
 import { Helmet } from "react-helmet-async";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import ErrorBox from "../components/ErrorBox";
 import { RootState } from "../store/store";
 import { BsTrashFill } from "@react-icons/all-files/bs/BsTrashFill";
@@ -15,9 +15,13 @@ import {
 } from "../store/cartSlice/cartSlice";
 
 const CartPage = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { cartItems } = useSelector((state: RootState) => state.cart);
   console.log(cartItems);
+  const checkoutHandler = () => {
+    navigate("/signin?redirect=/shipping");
+  };
   return (
     <div>
       <Helmet>
@@ -92,6 +96,7 @@ const CartPage = () => {
                     <Button
                       type="button"
                       variant="primary"
+                      onClick={() => checkoutHandler()}
                       disabled={cartItems.length === 0}
                     >
                       Proceed to checkout

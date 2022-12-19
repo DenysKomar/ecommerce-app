@@ -8,6 +8,7 @@ import { LinkContainer } from "react-router-bootstrap";
 import { useSelector } from "react-redux/es/exports";
 import { RootState } from "./store/store";
 import CartPage from "./pages/CartPage";
+import SignInPage from "./pages/SignInPage";
 
 function App() {
   const { value } = useSelector((state: RootState) => state.cart);
@@ -38,6 +39,7 @@ function App() {
             <Route path="/product/:slug" element={<ProductPage />} />
             <Route path="/" element={<HomePage />} />
             <Route path="/cart" element={<CartPage />} />
+            <Route path="/signin" element={<SignInPage />} />
           </Routes>
         </Container>
       </main>
