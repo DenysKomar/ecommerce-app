@@ -1,17 +1,19 @@
-// export interface IProductData {
-//   name: string;
-//   slug: string;
-//   category: string;
-//   image: string;
-//   price: number;
-//   countInStock: number;
-//   brand: string;
-//   rating: number;
-//   numReviews: number;
-//   description: string;
-// }
-
+import bcrypt from "bcryptjs";
 const data = {
+  users: [
+    {
+      name: "John",
+      email: "admin@example.com",
+      password: bcrypt.hashSync("123456"),
+      isAdmin: true,
+    },
+    {
+      name: "Smith",
+      email: "user@example.com",
+      password: bcrypt.hashSync("123456"),
+      isAdmin: false,
+    },
+  ],
   products: [
     {
       name: "Nike Slim shirt",
