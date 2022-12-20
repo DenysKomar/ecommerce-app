@@ -1,5 +1,4 @@
 export interface IProductData {
-  _id: number;
   name: string;
   slug: string;
   category: string;
