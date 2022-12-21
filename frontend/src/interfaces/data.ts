@@ -10,3 +10,10 @@ export interface IProductData {
   numReviews: number;
   description: string;
 }
+export interface IUserData {
+  email: string;
+  isAdmin: boolean;
+  name: string;
+  token: string;
+  _id: string;
+}

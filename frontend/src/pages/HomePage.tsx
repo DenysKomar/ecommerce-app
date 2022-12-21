@@ -7,6 +7,7 @@ import ErrorBox from "../components/ErrorBox";
 import Loading from "../components/Loading";
 import Product from "../components/Product";
 import { IProductData } from "../interfaces/data";
+import * as dotenv from "dotenv";
 
 const reducer = (state: any, action: any) => {
   switch (action.type) {
@@ -34,11 +35,12 @@ const HomePage = () => {
     const fetchData = async () => {
       dispatch({ type: "FETCH_REQUEST" });
       try {
-        const httpLink = "http://localhost:5000";
-        await axios.get(httpLink + "/api/products").then((response) => {
-          dispatch({ type: "FETCH_SUCCESS", payload: response.data });
-          console.log(response.data);
-        });
+        await axios
+          .get("http://localhost:5000" + "/api/products")
+          .then((response) => {
+            dispatch({ type: "FETCH_SUCCESS", payload: response.data });
+            console.log(response.data);
+          });
       } catch (error) {
         if (error instanceof Error) {
           dispatch({ type: "FETCH_FAILURE", payload: error.message });
