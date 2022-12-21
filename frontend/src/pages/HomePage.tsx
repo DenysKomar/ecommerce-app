@@ -1,50 +1,39 @@
 import axios from "axios";
 import React, { useEffect, useReducer, useState } from "react";
 import { Col, Row } from "react-bootstrap";
+import { Root } from "react-dom/client";
 import { Helmet } from "react-helmet-async";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import ErrorBox from "../components/ErrorBox";
 import Loading from "../components/Loading";
 import Product from "../components/Product";
 import { IProductData } from "../interfaces/data";
-import * as dotenv from "dotenv";
-
-const reducer = (state: any, action: any) => {
-  switch (action.type) {
-    case "FETCH_REQUEST":
-      return { ...state, loading: true };
-    case "FETCH_SUCCESS":
-      return { ...state, products: action.payload, loading: false };
-    case "FETCH_FAILURE":
-      return { ...state, error: action.payload, loading: false };
-    default:
-      return state;
-  }
-};
+import {
+  fetchProductsError,
+  fetchProductsRequest,
+  fetchProductsSuccess,
+} from "../store/productsSlice/productsSlice";
+import { RootState } from "../store/store";
 
 const HomePage = () => {
-  //   const [products, setProducts] = useState([]);
-
-  const [{ loading, error, products }, dispatch] = useReducer(reducer, {
-    loading: true,
-    products: [],
-    error: "",
-  });
+  const { loading, error, products } = useSelector(
+    (state: RootState) => state.products
+  );
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchData = async () => {
-      dispatch({ type: "FETCH_REQUEST" });
+      dispatch(fetchProductsRequest());
       try {
         await axios
           .get("http://localhost:5000" + "/api/products")
           .then((response) => {
-            dispatch({ type: "FETCH_SUCCESS", payload: response.data });
-            console.log(response.data);
+            dispatch(fetchProductsSuccess(response.data));
           });
       } catch (error) {
         if (error instanceof Error) {
-          dispatch({ type: "FETCH_FAILURE", payload: error.message });
-          console.log(error);
+          dispatch(fetchProductsError(error.message));
         }
       }
     };
@@ -64,11 +53,12 @@ const HomePage = () => {
           <ErrorBox variant="danger">{error}</ErrorBox>
         ) : (
           <Row>
-            {products.map((product: IProductData) => (
-              <Col key={product.slug} sm={6} md={4} lg={3} className="mb-3">
-                <Product product={product} />
-              </Col>
-            ))}
+            {products &&
+              products.map((product: IProductData) => (
+                <Col key={product.slug} sm={6} md={4} lg={3} className="mb-3">
+                  <Product product={product} />
+                </Col>
+              ))}
           </Row>
         )}
       </div>
