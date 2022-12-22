@@ -14,6 +14,7 @@ import { signOutUser } from "./store/userSlice/userSlice";
 import "react-toastify/dist/ReactToastify.css";
 import ShippingPage from "./pages/ShippingPage";
 import { clearCart } from "./store/cartSlice/cartSlice";
+import SignUpPage from "./pages/SignUpPage";
 
 function App() {
   const navigate = useNavigate();
@@ -78,6 +79,7 @@ function App() {
             <Route path="/cart" element={<CartPage />} />
             <Route path="/signin" element={<SignInPage />} />
             <Route path="/shipping" element={<ShippingPage />} />
+            <Route path="/signup" element={<SignUpPage />} />
           </Routes>
         </Container>
       </main>
