@@ -12,13 +12,19 @@ import CartPage from "./pages/CartPage";
 import SignInPage from "./pages/SignInPage";
 import { signOutUser } from "./store/userSlice/userSlice";
 import "react-toastify/dist/ReactToastify.css";
+import ShippingPage from "./pages/ShippingPage";
+import { clearCart } from "./store/cartSlice/cartSlice";
 
 function App() {
   const navigate = useNavigate();
   const { cart, user } = useSelector((state: RootState) => state);
   const signOutHandler = () => {
     signOutUser();
+    clearCart();
     localStorage.removeItem("userInfo");
+    localStorage.removeItem("addressInfo");
+    localStorage.removeItem("cartItems");
+    localStorage.removeItem("value");
     navigate("/");
   };
   return (
@@ -71,6 +77,7 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/cart" element={<CartPage />} />
             <Route path="/signin" element={<SignInPage />} />
+            <Route path="/shipping" element={<ShippingPage />} />
           </Routes>
         </Container>
       </main>
