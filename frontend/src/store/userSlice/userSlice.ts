@@ -10,6 +10,7 @@ interface IAddressData {
 interface IUserSlice {
   userInfo: IUserData | null;
   addressInfo: IAddressData | null;
+  paymentMethodName: string;
 }
 const initialState: IUserSlice = {
   userInfo: localStorage.getItem("userInfo")
@@ -17,6 +18,9 @@ const initialState: IUserSlice = {
     : null,
   addressInfo: localStorage.getItem("addressInfo")
     ? JSON.parse(localStorage.getItem("addressInfo") || "{}")
+    : null,
+  paymentMethodName: localStorage.getItem("paymentMethod")
+    ? JSON.parse(localStorage.getItem("paymentMethod") || "")
     : null,
 };
 
@@ -31,13 +35,18 @@ export const userSlice = createSlice({
     signOutUser: (state: IUserSlice) => {
       state.userInfo = null;
       state.addressInfo = null;
+      state.paymentMethodName = "";
     },
     saveAddress: (state: IUserSlice, action: PayloadAction<IAddressData>) => {
       state.addressInfo = action.payload;
       localStorage.setItem("addressInfo", JSON.stringify(action.payload));
     },
+    savePaymentMethod: (state: IUserSlice, action: PayloadAction<string>) => {
+      state.paymentMethodName = action.payload;
+    },
   },
 });
 
-export const { signInUser, signOutUser, saveAddress } = userSlice.actions;
+export const { signInUser, signOutUser, saveAddress, savePaymentMethod } =
+  userSlice.actions;
 export default userSlice.reducer;

@@ -15,6 +15,8 @@ import "react-toastify/dist/ReactToastify.css";
 import ShippingPage from "./pages/ShippingPage";
 import { clearCart } from "./store/cartSlice/cartSlice";
 import SignUpPage from "./pages/SignUpPage";
+import PaymentMethodsPage from "./pages/PaymentMethodsPage";
+import PlaceOrderPage from "./pages/PlaceOrderPage";
 
 function App() {
   const navigate = useNavigate();
@@ -26,6 +28,7 @@ function App() {
     localStorage.removeItem("addressInfo");
     localStorage.removeItem("cartItems");
     localStorage.removeItem("value");
+    localStorage.removeItem("paymentMethods");
     navigate("/");
   };
   return (
@@ -80,6 +83,8 @@ function App() {
             <Route path="/signin" element={<SignInPage />} />
             <Route path="/shipping" element={<ShippingPage />} />
             <Route path="/signup" element={<SignUpPage />} />
+            <Route path="/payment" element={<PaymentMethodsPage />} />
+            <Route path="/placeorder" element={<PlaceOrderPage />} />
           </Routes>
         </Container>
       </main>
