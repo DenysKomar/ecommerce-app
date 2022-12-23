@@ -1,14 +1,21 @@
+import axios from "axios";
+import { userInfo } from "os";
 import React, { useEffect, useState } from "react";
 import { Button, Card, Col, ListGroup, Row } from "react-bootstrap";
 import { Helmet } from "react-helmet-async";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import CheckOutBar from "../components/CheckOutBar";
+import Loading from "../components/Loading";
+import { clearCart } from "../store/cartSlice/cartSlice";
 import { RootState } from "../store/store";
 
 const PlaceOrderPage = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { user, cart } = useSelector((state: RootState) => state);
+  const [loading, setLoading] = useState<boolean>(false);
   const round2 = (num: number) => Math.round(num * 100 + Number.EPSILON) / 100;
   const [itemPrice, setItemPrice] = useState<number>(
     round2(cart.cartItems.reduce((a, c) => a + c.quantity * c.price, 0))
@@ -20,6 +27,37 @@ const PlaceOrderPage = () => {
   const [totalPrice, setTotalPrice] = useState(
     itemPrice + shippingPrice + taxPrice
   );
+
+  const placeOrderHandler = async () => {
+    try {
+      setLoading(true);
+
+      console.log(user.addressInfo);
+      const { data } = await axios.post(
+        "http://localhost:5000" + "/api/orders",
+        {
+          orderItems: cart.cartItems,
+          shippingAddress: user.addressInfo,
+          paymentMethod: user.paymentMethodName,
+          itemsPrice: itemPrice,
+          shippingPrice: shippingPrice,
+          taxPrice: taxPrice,
+          totalPrice: totalPrice,
+        },
+        { headers: { authorization: `Bearer ${user.userInfo!.token}` } }
+      );
+
+      setLoading(false);
+      dispatch(clearCart);
+      localStorage.removeItem("cartItems");
+      navigate(`/order/${data.order._id}`);
+    } catch (err) {
+      if (err instanceof Error) {
+        setLoading(false);
+        toast.error(err.message);
+      }
+    }
+  };
 
   useEffect(() => {
     if (!user.paymentMethodName) {
@@ -115,9 +153,10 @@ const PlaceOrderPage = () => {
                   </Row>
                 </ListGroup.Item>
                 <ListGroup.Item>
-                  <Row>
-                    <Button>Place Order</Button>
-                  </Row>
+                  <div className="d-grid">
+                    <Button onClick={placeOrderHandler}>Place Order</Button>
+                  </div>
+                  {loading && <Loading></Loading>}
                 </ListGroup.Item>
               </ListGroup>
             </Card.Body>
