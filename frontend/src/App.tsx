@@ -17,6 +17,7 @@ import { clearCart } from "./store/cartSlice/cartSlice";
 import SignUpPage from "./pages/SignUpPage";
 import PaymentMethodsPage from "./pages/PaymentMethodsPage";
 import PlaceOrderPage from "./pages/PlaceOrderPage";
+import OrderPage from "./pages/OrderPage";
 
 function App() {
   const navigate = useNavigate();
@@ -85,6 +86,7 @@ function App() {
             <Route path="/signup" element={<SignUpPage />} />
             <Route path="/payment" element={<PaymentMethodsPage />} />
             <Route path="/placeorder" element={<PlaceOrderPage />} />
+            <Route path="/order/:id" element={<OrderPage />} />
           </Routes>
         </Container>
       </main>
