@@ -9,15 +9,54 @@ import Loading from "../components/Loading";
 import {
   fetchOrderError,
   fetchOrderSuccess,
+  payFail,
+  payRequest,
+  paySuccess,
 } from "../store/orderSlice/orderSlice";
 import { RootState } from "../store/store";
+import {
+  PayPalButtons,
+  SCRIPT_LOADING_STATE,
+  usePayPalScriptReducer,
+} from "@paypal/react-paypal-js";
+import { toast } from "react-toastify";
 
 const OrderPage = () => {
   const { user, order } = useSelector((state: RootState) => state);
   const navigate = useNavigate();
   const params = useParams();
   const dispatch = useDispatch();
-  console.log(order.order);
+  const [{ isPending }, paypalDispatch] = usePayPalScriptReducer();
+  function createOrder(data: any, actions: any) {
+    return actions.order
+      .create({
+        purchase_units: [{ amount: { value: order.order.totalPrice } }],
+      })
+      .then((orderId: any) => {
+        return orderId;
+      });
+  }
+  function onApproveOrder(data: any, actions: any) {
+    return actions.order.capture().then(async function (details: any) {
+      try {
+        dispatch(payRequest);
+        const { data } = await axios.put(
+          "http://localhost:5000" + `/api/order/${order.order._id}/pay`,
+          details,
+          { headers: { authorization: `Bearer ${user.userInfo!.token}` } }
+        );
+        toast.success("order is paid");
+      } catch (err) {
+        if (err instanceof Error) {
+          dispatch(payFail);
+          toast.error(err.message);
+        }
+      }
+    });
+  }
+  const onError = (err: any) => {
+    toast.error(err.message);
+  };
 
   useEffect(() => {
     const fetchOrder = async () => {
@@ -43,11 +82,36 @@ const OrderPage = () => {
     }
     if (
       !order.order._id ||
+      order.successPay ||
       (order.order._id && order.order._id !== params.id)
     ) {
       fetchOrder();
+      if (order.successPay) {
+        dispatch(paySuccess);
+      }
+    } else {
+      const loadPaypalScript = async () => {
+        const { data: clientId } = await axios.get(
+          "http://localhost:5000" + "/api/keys/paypal",
+          {
+            headers: { authorization: `Bearer ${user.userInfo!.token}` },
+          }
+        );
+        paypalDispatch({
+          type: "resetOptions",
+          value: {
+            "client-id": clientId,
+            currency: "USD",
+          },
+        });
+        paypalDispatch({
+          type: "setLoadingStatus",
+          value: SCRIPT_LOADING_STATE.PENDING,
+        });
+      };
+      loadPaypalScript();
     }
-  }, [order, user.userInfo, params.id, navigate]);
+  }, [order, user.userInfo, params.id, navigate, paypalDispatch]);
   console.log(order.loading);
   return order.loading ? (
     <Loading></Loading>
@@ -153,6 +217,22 @@ const OrderPage = () => {
                   <Col>${order.order.totalPrice.toFixed(2)}</Col>
                 </Row>
               </ListGroup.Item>
+              {!order.order.isPaid && (
+                <ListGroup.Item>
+                  {isPending ? (
+                    <Loading></Loading>
+                  ) : (
+                    <div>
+                      <PayPalButtons
+                        createOrder={createOrder}
+                        onApprove={onApproveOrder}
+                        onError={onError}
+                      ></PayPalButtons>
+                    </div>
+                  )}
+                  {order.loadingPay && <Loading />}
+                </ListGroup.Item>
+              )}
             </Card.Body>
           </Card>
         </Col>
