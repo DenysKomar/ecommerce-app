@@ -18,6 +18,8 @@ import SignUpPage from "./pages/SignUpPage";
 import PaymentMethodsPage from "./pages/PaymentMethodsPage";
 import PlaceOrderPage from "./pages/PlaceOrderPage";
 import OrderPage from "./pages/OrderPage";
+import OrderHistoryPage from "./pages/OrderHistoryPage";
+import ProfilePage from "./pages/ProfilePage";
 
 function App() {
   const navigate = useNavigate();
@@ -31,47 +33,54 @@ function App() {
     localStorage.removeItem("value");
     localStorage.removeItem("paymentMethods");
     navigate("/");
+    window.location.href = "/signin";
   };
   return (
     <div className="d-flex flex-column site-container">
       <ToastContainer position="bottom-center" limit={1} />
       <header>
-        <Navbar bg="dark" variant="dark">
+        <Navbar bg="dark" variant="dark" expand="lg">
           <Container>
             <LinkContainer to="/">
               <Navbar.Brand>shop </Navbar.Brand>
             </LinkContainer>
-            <Nav className="me-auto">
-              <Link to="/cart" className="nav-link">
-                Cart
-                {cart.value > 0 && (
-                  <Badge pill bg="danger">
-                    {cart.value}
-                  </Badge>
-                )}
-              </Link>
-              {user.userInfo ? (
-                <NavDropdown title={user.userInfo.name} id="basic-nav-dropdown">
-                  <LinkContainer to="/profile">
-                    <NavDropdown.Item>User Profile</NavDropdown.Item>
-                  </LinkContainer>
-                  <LinkContainer to="/orderhistory">
-                    <NavDropdown.Item>Order History</NavDropdown.Item>
-                  </LinkContainer>
-                  <Link
-                    className="dropdown-item"
-                    to="#sighout"
-                    onClick={signOutHandler}
-                  >
-                    Sign Out
-                  </Link>
-                </NavDropdown>
-              ) : (
-                <Link className="nav-link" to="/signin">
-                  Sign in
+            <Navbar.Toggle aria-controls="basic-navbar-nav" />
+            <Navbar.Collapse id="basic-navbar-nav">
+              <Nav className="me-auto justify-content-end w-100">
+                <Link to="/cart" className="nav-link">
+                  Cart
+                  {cart.value > 0 && (
+                    <Badge pill bg="danger">
+                      {cart.value}
+                    </Badge>
+                  )}
                 </Link>
-              )}
-            </Nav>
+                {user.userInfo ? (
+                  <NavDropdown
+                    title={user.userInfo.name}
+                    id="basic-nav-dropdown"
+                  >
+                    <LinkContainer to="/profile">
+                      <NavDropdown.Item>User Profile</NavDropdown.Item>
+                    </LinkContainer>
+                    <LinkContainer to="/orderhistory">
+                      <NavDropdown.Item>Order History</NavDropdown.Item>
+                    </LinkContainer>
+                    <Link
+                      className="dropdown-item"
+                      to="#sighout"
+                      onClick={signOutHandler}
+                    >
+                      Sign Out
+                    </Link>
+                  </NavDropdown>
+                ) : (
+                  <Link className="nav-link" to="/signin">
+                    Sign in
+                  </Link>
+                )}
+              </Nav>
+            </Navbar.Collapse>
           </Container>
         </Navbar>
       </header>
@@ -87,6 +96,8 @@ function App() {
             <Route path="/payment" element={<PaymentMethodsPage />} />
             <Route path="/placeorder" element={<PlaceOrderPage />} />
             <Route path="/order/:id" element={<OrderPage />} />
+            <Route path="/orderhistory" element={<OrderHistoryPage />} />
+            <Route path="/profile" element={<ProfilePage />} />
           </Routes>
         </Container>
       </main>
