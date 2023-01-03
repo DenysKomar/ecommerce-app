@@ -30,9 +30,11 @@ export interface IOrder {
   isPaid: boolean;
   isDelivered: boolean;
   _id: string;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
   __v: number;
+  paidAt: string;
+  deliveredAt: string;
 }
 
 export interface RootObject {
@@ -46,12 +48,14 @@ interface IOrderSlice {
   loadingPay: boolean;
   successPay: boolean;
   errorPay: string;
+  allOrders: IOrder[];
 }
 const initialState: IOrderSlice = {
   loading: true,
   loadingPay: false,
   successPay: false,
   order: {} as IOrder,
+  allOrders: [],
   error: "",
   errorPay: "",
 };
@@ -60,6 +64,13 @@ export const orderSlice = createSlice({
   name: "order",
   initialState,
   reducers: {
+    fetchAllOrdersSuccess: (
+      state: IOrderSlice,
+      action: PayloadAction<IOrder[]>
+    ) => {
+      state.loading = false;
+      state.allOrders = action.payload;
+    },
     fetchOrderSuccess: (state: IOrderSlice, action: PayloadAction<IOrder>) => {
       state.loading = false;
       state.order = action.payload;
@@ -93,5 +104,6 @@ export const {
   paySuccess,
   payFail,
   payReset,
+  fetchAllOrdersSuccess,
 } = orderSlice.actions;
 export default orderSlice.reducer;
