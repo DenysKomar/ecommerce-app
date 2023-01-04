@@ -20,8 +20,10 @@ import PlaceOrderPage from "./pages/PlaceOrderPage";
 import OrderPage from "./pages/OrderPage";
 import OrderHistoryPage from "./pages/OrderHistoryPage";
 import ProfilePage from "./pages/ProfilePage";
+import axios from "axios";
 
 function App() {
+  axios.defaults.baseURL = "http://localhost:5000";
   const navigate = useNavigate();
   const { cart, user } = useSelector((state: RootState) => state);
   const signOutHandler = () => {
