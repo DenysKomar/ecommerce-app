@@ -112,7 +112,6 @@ const OrderPage = () => {
       loadPaypalScript();
     }
   }, [order, user.userInfo, params.id, navigate, paypalDispatch]);
-  console.log(order.loading);
   return order.loading ? (
     <Loading></Loading>
   ) : order.error ? (

@@ -18,7 +18,6 @@ const CartPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { cartItems } = useSelector((state: RootState) => state.cart);
-  console.log(cartItems);
   const checkoutHandler = () => {
     navigate("/signin?redirect=/shipping");
   };
