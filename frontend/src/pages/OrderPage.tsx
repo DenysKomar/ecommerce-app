@@ -41,7 +41,7 @@ const OrderPage = () => {
       try {
         dispatch(payRequest);
         const { data } = await axios.put(
-          "http://localhost:5000" + `/api/order/${order.order._id}/pay`,
+          `/api/order/${order.order._id}/pay`,
           details,
           { headers: { authorization: `Bearer ${user.userInfo!.token}` } }
         );
@@ -61,14 +61,11 @@ const OrderPage = () => {
   useEffect(() => {
     const fetchOrder = async () => {
       try {
-        const { data } = await axios.get(
-          "http://localhost:5000" + `/api/orders/${params.id}`,
-          {
-            headers: {
-              authorization: `Bearer ${user.userInfo!.token}`,
-            },
-          }
-        );
+        const { data } = await axios.get(`/api/orders/${params.id}`, {
+          headers: {
+            authorization: `Bearer ${user.userInfo!.token}`,
+          },
+        });
         dispatch(fetchOrderSuccess(data));
       } catch (err) {
         if (err instanceof Error) {
@@ -91,12 +88,9 @@ const OrderPage = () => {
       }
     } else {
       const loadPaypalScript = async () => {
-        const { data: clientId } = await axios.get(
-          "http://localhost:5000" + "/api/keys/paypal",
-          {
-            headers: { authorization: `Bearer ${user.userInfo!.token}` },
-          }
-        );
+        const { data: clientId } = await axios.get("/api/keys/paypal", {
+          headers: { authorization: `Bearer ${user.userInfo!.token}` },
+        });
         paypalDispatch({
           type: "resetOptions",
           value: {

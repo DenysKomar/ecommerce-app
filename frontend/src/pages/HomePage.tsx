@@ -26,11 +26,9 @@ const HomePage = () => {
     const fetchData = async () => {
       dispatch(fetchProductsRequest());
       try {
-        await axios
-          .get("http://localhost:5000" + "/api/products")
-          .then((response) => {
-            dispatch(fetchProductsSuccess(response.data));
-          });
+        await axios.get("/api/products").then((response) => {
+          dispatch(fetchProductsSuccess(response.data));
+        });
       } catch (error) {
         if (error instanceof Error) {
           dispatch(fetchProductsError(error.message));

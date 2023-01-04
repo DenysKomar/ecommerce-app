@@ -21,13 +21,10 @@ const SignInPage = () => {
   const submitHandler = async (e: any) => {
     e.preventDefault();
     try {
-      const { data } = await axios.post(
-        "http://localhost:5000" + "/api/users/signin",
-        {
-          email,
-          password,
-        }
-      );
+      const { data } = await axios.post("/api/users/signin", {
+        email,
+        password,
+      });
       dispatch(signInUser(data));
       localStorage.setItem("userInfo", JSON.stringify(data));
       navigate(redirect || "/");

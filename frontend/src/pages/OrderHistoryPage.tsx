@@ -21,12 +21,9 @@ const OrderHistoryPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const { data } = await axios.get(
-          "http://localhost:5000" + "/api/orders/mine",
-          {
-            headers: { authorization: `Bearer ${user.userInfo!.token}` },
-          }
-        );
+        const { data } = await axios.get("/api/orders/mine", {
+          headers: { authorization: `Bearer ${user.userInfo!.token}` },
+        });
         dispatch(fetchAllOrdersSuccess(data));
       } catch (err) {
         if (err instanceof Error) {
