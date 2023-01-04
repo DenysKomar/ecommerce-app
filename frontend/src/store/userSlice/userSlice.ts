@@ -29,7 +29,6 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     signInUser: (state: IUserSlice, action: PayloadAction<IUserData>) => {
-      console.log(action.payload);
       state.userInfo = action.payload;
     },
     signOutUser: (state: IUserSlice) => {

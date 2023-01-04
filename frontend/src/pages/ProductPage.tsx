@@ -26,12 +26,10 @@ const ProductPage = () => {
           .get(httpLink + `/api/products/slug/${slug}`)
           .then((response) => {
             dispatch(fetchSuccess(response.data));
-            console.log(response);
           });
       } catch (error) {
         if (error instanceof Error) {
           dispatch(fetchError(error.message));
-          console.log(error);
         }
       }
     };

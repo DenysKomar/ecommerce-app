@@ -32,7 +32,6 @@ const PlaceOrderPage = () => {
     try {
       setLoading(true);
 
-      console.log(user.addressInfo);
       const { data } = await axios.post(
         "http://localhost:5000" + "/api/orders",
         {
