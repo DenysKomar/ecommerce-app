@@ -21,6 +21,7 @@ import OrderPage from "./pages/OrderPage";
 import OrderHistoryPage from "./pages/OrderHistoryPage";
 import ProfilePage from "./pages/ProfilePage";
 import axios from "axios";
+import NotFound from "./pages/NotFound";
 
 function App() {
   axios.defaults.baseURL = "http://localhost:5000";
@@ -34,8 +35,8 @@ function App() {
     localStorage.removeItem("cartItems");
     localStorage.removeItem("value");
     localStorage.removeItem("paymentMethods");
-    navigate("/");
-    window.location.href = "/signin";
+    navigate("/signin");
+    // window.location.href = "/signin";
   };
   return (
     <div className="d-flex flex-column site-container">
@@ -44,7 +45,7 @@ function App() {
         <Navbar bg="dark" variant="dark" expand="lg">
           <Container>
             <LinkContainer to="/">
-              <Navbar.Brand>shop </Navbar.Brand>
+              <Navbar.Brand>Shop </Navbar.Brand>
             </LinkContainer>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
@@ -100,6 +101,7 @@ function App() {
             <Route path="/order/:id" element={<OrderPage />} />
             <Route path="/orderhistory" element={<OrderHistoryPage />} />
             <Route path="/profile" element={<ProfilePage />} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </Container>
       </main>
