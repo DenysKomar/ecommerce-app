@@ -70,7 +70,7 @@ function App() {
                     </LinkContainer>
                     <Link
                       className="dropdown-item"
-                      to="signin"
+                      to="/signin"
                       onClick={signOutHandler}
                     >
                       Sign Out
