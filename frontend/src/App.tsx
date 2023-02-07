@@ -30,7 +30,7 @@ import axios from "axios";
 import NotFound from "./pages/NotFound";
 
 function App() {
- 
+  axios.defaults.baseURL = "https://ecommerceappdk.onrender.com/";
   const navigate = useNavigate();
   const { cart, user } = useSelector((state: RootState) => state);
   const signOutHandler = () => {
