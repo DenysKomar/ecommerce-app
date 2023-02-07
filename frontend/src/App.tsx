@@ -20,8 +20,11 @@ import PlaceOrderPage from "./pages/PlaceOrderPage";
 import OrderPage from "./pages/OrderPage";
 import OrderHistoryPage from "./pages/OrderHistoryPage";
 import ProfilePage from "./pages/ProfilePage";
+import axios from "axios";
+import NotFound from "./pages/NotFound";
 
 function App() {
+  axios.defaults.baseURL = "http://localhost:5000";
   const navigate = useNavigate();
   const { cart, user } = useSelector((state: RootState) => state);
   const signOutHandler = () => {
@@ -42,7 +45,7 @@ function App() {
         <Navbar bg="dark" variant="dark" expand="lg">
           <Container>
             <LinkContainer to="/">
-              <Navbar.Brand>shop </Navbar.Brand>
+              <Navbar.Brand>Shop </Navbar.Brand>
             </LinkContainer>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
@@ -68,7 +71,7 @@ function App() {
                     </LinkContainer>
                     <Link
                       className="dropdown-item"
-                      to="#sighout"
+                      to="/signin"
                       onClick={signOutHandler}
                     >
                       Sign Out
@@ -98,6 +101,7 @@ function App() {
             <Route path="/order/:id" element={<OrderPage />} />
             <Route path="/orderhistory" element={<OrderHistoryPage />} />
             <Route path="/profile" element={<ProfilePage />} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </Container>
       </main>

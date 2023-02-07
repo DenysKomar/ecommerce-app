@@ -19,7 +19,7 @@ const ProfilePage = () => {
     e.preventDefault();
     try {
       const { data } = await axios.put(
-        "http://localhost:5000" + "/api/users/profile",
+        "/api/users/profile",
         { name, email, password },
         {
           headers: { authorization: `Bearer ${user.userInfo!.token}` },

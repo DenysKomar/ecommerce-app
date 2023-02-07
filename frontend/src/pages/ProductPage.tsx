@@ -21,12 +21,9 @@ const ProductPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const httpLink = "http://localhost:5000";
-        await axios
-          .get(httpLink + `/api/products/slug/${slug}`)
-          .then((response) => {
-            dispatch(fetchSuccess(response.data));
-          });
+        await axios.get(`/api/products/slug/${slug}`).then((response) => {
+          dispatch(fetchSuccess(response.data));
+        });
       } catch (error) {
         if (error instanceof Error) {
           dispatch(fetchError(error.message));

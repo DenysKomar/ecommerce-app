@@ -33,7 +33,7 @@ const PlaceOrderPage = () => {
       setLoading(true);
 
       const { data } = await axios.post(
-        "http://localhost:5000" + "/api/orders",
+        "/api/orders",
         {
           orderItems: cart.cartItems,
           shippingAddress: user.addressInfo,
