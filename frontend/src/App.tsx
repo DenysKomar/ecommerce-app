@@ -1,4 +1,10 @@
-import { Route, Router, Routes, useNavigate } from "react-router-dom";
+import {
+  Route,
+  Router,
+  Routes,
+  useNavigate,
+  useParams,
+} from "react-router-dom";
 import { IProductData } from "./interfaces/data";
 import HomePage from "./pages/HomePage";
 import ProductPage from "./pages/ProductPage";
@@ -24,7 +30,7 @@ import axios from "axios";
 import NotFound from "./pages/NotFound";
 
 function App() {
-  axios.defaults.baseURL = "http://localhost:5000";
+  axios.defaults.baseURL = "window.location.href";
   const navigate = useNavigate();
   const { cart, user } = useSelector((state: RootState) => state);
   const signOutHandler = () => {
