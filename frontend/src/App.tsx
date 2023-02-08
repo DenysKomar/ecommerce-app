@@ -41,8 +41,8 @@ function App() {
     localStorage.removeItem("cartItems");
     localStorage.removeItem("value");
     localStorage.removeItem("paymentMethods");
+    location.reload();
     navigate("/");
-    window.location.href = "/signin";
   };
   return (
     <div className="d-flex flex-column site-container">
