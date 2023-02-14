@@ -9,9 +9,16 @@ import { IProductData } from "./interfaces/data";
 import HomePage from "./pages/HomePage";
 import ProductPage from "./pages/ProductPage";
 import { Link } from "react-router-dom";
-import { Badge, Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
+import {
+  Badge,
+  Button,
+  Container,
+  Nav,
+  Navbar,
+  NavDropdown,
+} from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
-import { ToastContainer } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import { useSelector } from "react-redux/es/exports";
 import { RootState } from "./store/store";
 import CartPage from "./pages/CartPage";
@@ -28,9 +35,15 @@ import OrderHistoryPage from "./pages/OrderHistoryPage";
 import ProfilePage from "./pages/ProfilePage";
 import axios from "axios";
 import NotFound from "./pages/NotFound";
+import { useState, useEffect } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { IconProp } from "@fortawesome/fontawesome-svg-core";
+import SearchBox from "./components/SearchBox";
 
 function App() {
   axios.defaults.baseURL = "https://ecommerceappdk.onrender.com/";
+  const [sidebarIsOpen, setSideBarIsOpen] = useState<boolean>(false);
+  const [categories, setCategories] = useState<string[]>([]);
   const navigate = useNavigate();
   const { cart, user } = useSelector((state: RootState) => state);
   const signOutHandler = () => {
@@ -44,17 +57,42 @@ function App() {
     location.reload();
     navigate("/");
   };
+  useEffect(() => {
+    const fetchCategories = async () => {
+      const { data } = await axios.get("/api/products/categories");
+      setCategories(data);
+      try {
+      } catch (err) {
+        if (err instanceof Error) {
+          toast.error(err.message);
+        }
+      }
+    };
+  });
   return (
-    <div className="d-flex flex-column site-container">
+    <div
+      className={
+        sidebarIsOpen
+          ? "d-flex flex-column site-container active-cont"
+          : "d-flex flex-column site-container"
+      }
+    >
       <ToastContainer position="bottom-center" limit={1} />
       <header>
         <Navbar bg="dark" variant="dark" expand="lg">
           <Container>
+            <Button
+              variant="dark"
+              onClick={() => setSideBarIsOpen(!sidebarIsOpen)}
+            >
+              <i className="fa fa-bars" />
+            </Button>
             <LinkContainer to="/">
               <Navbar.Brand>Shop </Navbar.Brand>
             </LinkContainer>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
+              <SearchBox />
               <Nav className="me-auto justify-content-end w-100">
                 <Link to="/cart" className="nav-link">
                   Cart
@@ -93,6 +131,31 @@ function App() {
           </Container>
         </Navbar>
       </header>
+      <div
+        className={
+          sidebarIsOpen
+            ? "active-nav side-navbar d-flex justify-content-between flex-wrap flex-column"
+            : "side-navbar d-flex justify-content-between flex-wrap flex-column"
+        }
+      >
+        <Nav className="flex-column text-white w-100 p-2">
+          <>
+            <Nav.Item>
+              <strong>Categories</strong>
+            </Nav.Item>
+            {categories.map((category) => {
+              <Nav.Item key={category}>
+                <LinkContainer
+                  to={`/search?category=${category}`}
+                  onClick={() => setSideBarIsOpen(false)}
+                >
+                  <Nav.Link>{category}</Nav.Link>
+                </LinkContainer>
+              </Nav.Item>;
+            })}
+          </>
+        </Nav>
+      </div>
       <main>
         <Container className="mt-3">
           <Routes>

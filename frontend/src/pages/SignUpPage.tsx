@@ -20,7 +20,7 @@ const SignUpPage = () => {
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const submitHandler = async (e: any) => {
+  const submitHandler = async (e: React.FormEvent) => {
     e.preventDefault();
     if (password !== confirmPassword) {
       toast.error("Password do not match");
