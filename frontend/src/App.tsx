@@ -39,6 +39,7 @@ import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import SearchBox from "./components/SearchBox";
+import SearchPage from "./pages/SearchPage";
 
 function App() {
   axios.defaults.baseURL = "https://ecommerceappdk.onrender.com/";
@@ -162,6 +163,7 @@ function App() {
             <Route path="/product/:slug" element={<ProductPage />} />
             <Route path="/" element={<HomePage />} />
             <Route path="/cart" element={<CartPage />} />
+            <Route path="/search" element={<SearchPage />} />
             <Route path="/signin" element={<SignInPage />} />
             <Route path="/shipping" element={<ShippingPage />} />
             <Route path="/signup" element={<SignUpPage />} />

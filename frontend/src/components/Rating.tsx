@@ -4,11 +4,17 @@ import { BsStar } from "@react-icons/all-files/bs/BsStar";
 
 interface IRating {
   rating: number;
-  numReviews: number;
+  numReviews?: number;
   className?: ReactNode;
+  caption?: string;
 }
 
-const Rating = ({ numReviews, rating, className }: IRating): JSX.Element => {
+const Rating = ({
+  numReviews,
+  rating,
+  className,
+  caption,
+}: IRating): JSX.Element => {
   const [ratingArray, setRatingArray] = useState<JSX.Element[]>(
     new Array(5).fill(<></>)
   );
@@ -34,7 +40,11 @@ const Rating = ({ numReviews, rating, className }: IRating): JSX.Element => {
       {ratingArray.map((r) => (
         <span key={Math.random()}>{r}</span>
       ))}
-      <span>{numReviews} reviews</span>
+      {caption ? (
+        <span>{caption}</span>
+      ) : (
+        <span>{"" + numReviews + " reviews"}</span>
+      )}
     </div>
   );
 };
