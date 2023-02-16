@@ -172,6 +172,7 @@ function App() {
             <Route path="/placeorder" element={<PlaceOrderPage />} />
             <Route path="/order/:id" element={<OrderPage />} />
             <Route path="/orderhistory" element={<OrderHistoryPage />} />
+            <Route path="/orderhistory/order/:id" element={<OrderPage />} />
             <Route path="/profile" element={<ProfilePage />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
