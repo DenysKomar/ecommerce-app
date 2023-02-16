@@ -2,6 +2,7 @@ body {
   margin: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  height: 100%;
 }
 
 main {
@@ -58,10 +59,10 @@ a {
 
 .side-navbar {
   width: 240px;
-  height: 100%;
   position: absolute;
+  height: 100%;
   left: -300px;
-  background-color: #100901;
+  background-color: #212529;
   transition: 0.5s;
 }
 .site-container {

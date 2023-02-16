@@ -60,16 +60,17 @@ function App() {
   };
   useEffect(() => {
     const fetchCategories = async () => {
-      const { data } = await axios.get("/api/products/categories");
-      setCategories(data);
       try {
+        const { data } = await axios.get("/api/products/categories");
+        setCategories(data);
       } catch (err) {
         if (err instanceof Error) {
           toast.error(err.message);
         }
       }
     };
-  });
+    fetchCategories();
+  }, []);
   return (
     <div
       className={

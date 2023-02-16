@@ -61,10 +61,6 @@ const SearchPage = () => {
   ];
   const ratings = [
     {
-      name: "5 starts",
-      rating: 5,
-    },
-    {
       name: "4 starts & up",
       rating: 4,
     },
@@ -163,12 +159,14 @@ const SearchPage = () => {
                   </Link>
                 </li>
               ))}
-              <Link
-                className={rating === "all" ? "text-bold" : ""}
-                to={getFilterUrl({ rating: rating })}
-              >
-                <Rating rating={0} />
-              </Link>
+              <li>
+                <Link
+                  className={rating === "all" ? "text-bold" : ""}
+                  to={getFilterUrl({ rating: rating })}
+                >
+                  <Rating rating={0} />
+                </Link>
+              </li>
             </ul>
           </div>
         </Col>
