@@ -61,6 +61,10 @@ const SearchPage = () => {
   ];
   const ratings = [
     {
+      name: "5 starts",
+      rating: 5,
+    },
+    {
       name: "4 starts & up",
       rating: 4,
     },
@@ -149,13 +153,13 @@ const SearchPage = () => {
           <div>
             <h3>Customers Review</h3>
             <ul>
-              {prices.map((r: any) => (
+              {ratings.map((r: any) => (
                 <li key={r.name}>
                   <Link
                     className={r.rating === rating ? "text-bold" : ""}
                     to={getFilterUrl({ rating: r.rating })}
                   >
-                    <Rating caption={"& up"} rating={r.rating} />
+                    <Rating rating={r.rating} />
                   </Link>
                 </li>
               ))}
@@ -163,7 +167,7 @@ const SearchPage = () => {
                 className={rating === "all" ? "text-bold" : ""}
                 to={getFilterUrl({ rating: rating })}
               >
-                <Rating caption={"& up"} rating={0} />
+                <Rating rating={0} />
               </Link>
             </ul>
           </div>

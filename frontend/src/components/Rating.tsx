@@ -6,15 +6,9 @@ interface IRating {
   rating: number;
   numReviews?: number;
   className?: ReactNode;
-  caption?: string;
 }
 
-const Rating = ({
-  numReviews,
-  rating,
-  className,
-  caption,
-}: IRating): JSX.Element => {
+const Rating = ({ numReviews, rating, className }: IRating): JSX.Element => {
   const [ratingArray, setRatingArray] = useState<JSX.Element[]>(
     new Array(5).fill(<></>)
   );
@@ -40,11 +34,8 @@ const Rating = ({
       {ratingArray.map((r) => (
         <span key={Math.random()}>{r}</span>
       ))}
-      {caption ? (
-        <span>{caption}</span>
-      ) : (
-        <span>{"" + numReviews + " reviews"}</span>
-      )}
+
+      {/* <span>{" reviews"}</span> */}
     </div>
   );
 };

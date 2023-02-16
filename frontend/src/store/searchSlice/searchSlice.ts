@@ -15,7 +15,7 @@ const initialState: ISearchState = {
   page: "",
   pages: "",
   countProducts: 0,
-  loading: true,
+  loading: false,
   error: "",
 };
 export const searchSlice = createSlice({
