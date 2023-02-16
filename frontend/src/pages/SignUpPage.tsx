@@ -4,7 +4,6 @@ import { Button, Container, Form } from "react-bootstrap";
 import { Helmet } from "react-helmet-async";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { redirect } from "react-router-dom";
 import { toast } from "react-toastify";
 import { RootState } from "../store/store";
 import { signInUser } from "../store/userSlice/userSlice";
