@@ -1,8 +1,11 @@
-import React from "react";
 import { Alert } from "react-bootstrap";
+interface IErrorBox {
+  children: React.ReactNode;
+  variant?: string;
+}
 
-const ErrorBox = (props: any) => {
-  return <Alert variant={props.variant || "info"}>{props.children}</Alert>;
+const ErrorBox = ({ children, variant }: IErrorBox): JSX.Element => {
+  return <Alert variant={variant || "info"}>{children}</Alert>;
 };
 
 export default ErrorBox;

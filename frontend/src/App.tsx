@@ -1,11 +1,5 @@
-import {
-  Route,
-  Router,
-  Routes,
-  useNavigate,
-  useParams,
-} from "react-router-dom";
-import { IProductData } from "./interfaces/data";
+import { Route, Routes, useNavigate } from "react-router-dom";
+
 import HomePage from "./pages/HomePage";
 import ProductPage from "./pages/ProductPage";
 import { Link } from "react-router-dom";
@@ -36,13 +30,13 @@ import ProfilePage from "./pages/ProfilePage";
 import axios from "axios";
 import NotFound from "./pages/NotFound";
 import { useState, useEffect } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { IconProp } from "@fortawesome/fontawesome-svg-core";
+
 import SearchBox from "./components/SearchBox";
 import SearchPage from "./pages/SearchPage";
+import apiLink from "./api/api";
 
 function App() {
-  axios.defaults.baseURL = "https://ecommerceappdk.onrender.com/";
+  axios.defaults.baseURL = apiLink;
   const [sidebarIsOpen, setSideBarIsOpen] = useState<boolean>(false);
   const [categories, setCategories] = useState<string[]>([]);
   const navigate = useNavigate();

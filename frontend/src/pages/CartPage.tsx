@@ -1,8 +1,7 @@
-import React from "react";
 import { Button, Card, Col, ListGroup, Row } from "react-bootstrap";
 import { Helmet } from "react-helmet-async";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ErrorBox from "../components/ErrorBox";
 import { RootState } from "../store/store";
 import { BsTrashFill } from "@react-icons/all-files/bs/BsTrashFill";

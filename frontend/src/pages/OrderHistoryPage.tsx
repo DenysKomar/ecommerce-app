@@ -42,7 +42,7 @@ const OrderHistoryPage = () => {
       {loading ? (
         <Loading></Loading>
       ) : error ? (
-        <ErrorBox></ErrorBox>
+        <ErrorBox>{error}</ErrorBox>
       ) : (
         <table className="table">
           <thead>
